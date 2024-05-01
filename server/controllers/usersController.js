@@ -20,7 +20,9 @@ usersController.likeGame = async (req, res, next) => {
     // check if game has been already liked by user
     const userData = await Users.findOne({ username: username });
     // if it hasn't been liked add to likedGames under that user
-    if (!userData.likedGames.find(likedGame => likedGame.name === game.name)) {
+    if (
+      !userData.likedGames.find((likedGame) => likedGame.name === game.name)
+    ) {
       await Users.updateOne(
         { username: username },
         { $push: { likedGames: game } }
@@ -101,6 +103,7 @@ usersController.createUser = async (req, res, next) => {
 };
 
 usersController.verifyUser = async (req, res, next) => {
+  console.log('hii');
   try {
     const { username, password } = req.body;
     // some password comaparing logic using bcrypt
