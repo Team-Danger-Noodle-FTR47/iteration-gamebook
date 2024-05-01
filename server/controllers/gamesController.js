@@ -89,10 +89,12 @@ gamesController.getGames = async (req, res, next) => {
     // find games from db depending on filters sent from frontend
     // req.body should be something like { platforms: [platform1, platform2], genres: [genre1, genre2] }
     const { username, platforms, genres } = req.body;
+
     res.locals.games = await ApiGames.find({
       platforms: { $in: platforms },
       genres: { $in: genres },
     });
+
     console.log(res.locals.games);
     next();
   } catch (error) {
@@ -121,7 +123,7 @@ gamesController.gameFilter = async (req, res, next) => {
       return !excludedNames.includes(game.name);
     }); //assume we are mathing with game names?
     res.locals.filteredGames = filteredGames;
-    console.log('filtered', Array.isArray(res.locals.filteredGames));
+    // console.log('filtered', Array.isArray(res.locals.filteredGames));
 
     next();
   } catch (error) {
