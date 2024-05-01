@@ -62,7 +62,8 @@ gamesController.apiSave = async (req, res, next) => {
       const gameData = {
         id: game.id,
         name: game.name,
-        cover: cover[0],
+        //cover: cover[0],
+        cover: cover,
         similar_games: similarGames,
         summary: game.summary,
         platforms: platforms,
@@ -92,6 +93,7 @@ gamesController.getGames = async (req, res, next) => {
       platforms: { $in: platforms },
       genres: { $in: genres },
     });
+    console.log(res.locals.games);
     next();
   } catch (error) {
     console.log(error);

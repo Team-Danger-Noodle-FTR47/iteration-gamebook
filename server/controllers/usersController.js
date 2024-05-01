@@ -103,7 +103,6 @@ usersController.createUser = async (req, res, next) => {
 };
 
 usersController.verifyUser = async (req, res, next) => {
-  console.log('hii');
   try {
     const { username, password } = req.body;
     // some password comaparing logic using bcrypt

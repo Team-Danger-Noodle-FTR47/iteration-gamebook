@@ -18,7 +18,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route
-          path="/login"
+          path='/login'
           element={
             <LoginPage
               setIsAuthenticated={setIsAuthenticated}
@@ -27,17 +27,17 @@ const App = () => {
             />
           }
         />
-        <Route path="/signup" element={<SignupPage />} />
+        <Route path='/signup' element={<SignupPage />} />
         {/* <Route path="/" element={<MainPage initialGames={initialGames}/>} /> */}
         <Route
-          path="/home"
+          path='/home'
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <MainPage initialGames={initialGames} user={user} />
             </ProtectedRoute>
           }
         />
-        <Route path="/" element={<Navigate replace to="/login" />} />
+        <Route path='/' element={<Navigate replace to='/login' />} />
       </Routes>
     </BrowserRouter>
   );

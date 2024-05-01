@@ -34,7 +34,8 @@ app.post(
   gamesController.gameFilter,
   (req, res) => {
     // returns array of objects of games
-    res.status(200).json(res.locals.filteredGames);
+    console.log('hi------', res.locals);
+    res.status(200).json(res.locals.games);
   }
 );
 
