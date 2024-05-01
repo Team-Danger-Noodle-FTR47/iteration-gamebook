@@ -11,6 +11,7 @@ const baseUrl = 'https://api.igdb.com/v4/';
 
 // api request
 gamesController.apiSave = async (req, res, next) => {
+  console.log('hiiii');
   /*
   when the INITIAL request is made to API (using postman for now),
   take the data received and store into db apigames collection
@@ -33,7 +34,7 @@ gamesController.apiSave = async (req, res, next) => {
       const data = await response.json();
       // if endpoint is covers, return the url and remove the first two slashes
       // else return data.name
-      return data.map(item => {
+      return data.map((item) => {
         if (endpoint === 'covers') {
           return item.url.slice(2);
         } else {
@@ -49,7 +50,7 @@ gamesController.apiSave = async (req, res, next) => {
       // making individual fetch requests calling fetchIdName
       if (!game.cover || !game.similar_games || !game.platforms || !game.genres)
         continue;
-
+      // endpoints
       const cover = await fetchIdName(game.cover, 'covers');
 
       const similarGames = await fetchIdName(game.similar_games, 'games');
@@ -61,7 +62,8 @@ gamesController.apiSave = async (req, res, next) => {
       const gameData = {
         id: game.id,
         name: game.name,
-        cover: cover[0],
+        //cover: cover[0],
+        cover: cover,
         similar_games: similarGames,
         summary: game.summary,
         platforms: platforms,
@@ -87,10 +89,13 @@ gamesController.getGames = async (req, res, next) => {
     // find games from db depending on filters sent from frontend
     // req.body should be something like { platforms: [platform1, platform2], genres: [genre1, genre2] }
     const { username, platforms, genres } = req.body;
+
     res.locals.games = await ApiGames.find({
       platforms: { $in: platforms },
       genres: { $in: genres },
     });
+
+    console.log(res.locals.games);
     next();
   } catch (error) {
     console.log(error);
@@ -112,13 +117,13 @@ gamesController.gameFilter = async (req, res, next) => {
     // console.log(res.locals.filteredGames.slice(0, 2));
 
     const excludedGames = user.likedGames;
-    const excludedNames = excludedGames.map(game => game.name);
+    const excludedNames = excludedGames.map((game) => game.name);
 
-    const filteredGames = res.locals.games.filter(game => {
+    const filteredGames = res.locals.games.filter((game) => {
       return !excludedNames.includes(game.name);
     }); //assume we are mathing with game names?
     res.locals.filteredGames = filteredGames;
-    console.log('filtered', Array.isArray(res.locals.filteredGames));
+    // console.log('filtered', Array.isArray(res.locals.filteredGames));
 
     next();
   } catch (error) {

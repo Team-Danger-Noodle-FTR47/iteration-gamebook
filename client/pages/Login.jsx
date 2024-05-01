@@ -14,7 +14,7 @@ const LoginPage = ({ setIsAuthenticated, setInitialGames, setUser }) => {
   const navigate = useNavigate();
 
   // Handler for submitting
-  const handleLogin = async e => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     // [Not Done yet] backend login engagement here
     setError('');
@@ -42,11 +42,11 @@ const LoginPage = ({ setIsAuthenticated, setInitialGames, setUser }) => {
   };
 
   // Handler for user input fetching
-  const handleUsernameChange = e => {
+  const handleUsernameChange = (e) => {
     setUsername(e.target.value);
   };
 
-  const handlePasswordChange = e => {
+  const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
 
@@ -73,7 +73,7 @@ const LoginPage = ({ setIsAuthenticated, setInitialGames, setUser }) => {
     'Fighting',
   ];
 
-  const handleSetInitialData = async e => {
+  const handleSetInitialData = async (e) => {
     try {
       const response = await fetch(`http://localhost:3000/games`, {
         method: 'POST',
@@ -92,6 +92,7 @@ const LoginPage = ({ setIsAuthenticated, setInitialGames, setUser }) => {
       }
 
       const gamesData = await response.json();
+      console.log(gamesData);
       // Update with the new games data
       setInitialGames(gamesData);
     } catch (error) {
@@ -100,36 +101,36 @@ const LoginPage = ({ setIsAuthenticated, setInitialGames, setUser }) => {
   };
 
   return (
-    <div className="login">
+    <div className='login'>
       <Header />
       <form
-        onSubmit={async e => {
+        onSubmit={async (e) => {
           handleLogin(e);
           handleSetInitialData(e);
         }}
       >
-        {error && <div className="error-message">{error}</div>}
-        <div className="input-field">
-          <label htmlFor="username">Username</label>
+        {error && <div className='error-message'>{error}</div>}
+        <div className='input-field'>
+          <label htmlFor='username'>Username</label>
           <input
-            type="text"
-            id="username"
+            type='text'
+            id='username'
             value={username}
             onChange={handleUsernameChange}
           />
         </div>
-        <div className="input-field">
-          <label htmlFor="password">Password</label>
+        <div className='input-field'>
+          <label htmlFor='password'>Password</label>
           <input
-            type="password"
-            id="password"
+            type='password'
+            id='password'
             value={password}
             onChange={handlePasswordChange}
           />
         </div>
-        <div className="action-buttons">
-          <button type="submit">Login</button>
-          <Link to="/signup">Sign Up</Link>
+        <div className='action-buttons'>
+          <button type='submit'>Login</button>
+          <Link to='/signup'>Sign Up</Link>
         </div>
       </form>
     </div>

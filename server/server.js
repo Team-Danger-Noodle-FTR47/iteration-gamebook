@@ -8,7 +8,8 @@ require('dotenv').config();
 const gamesController = require('./controllers/gamesController');
 const usersController = require('./controllers/usersController');
 
-URI = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PWD}@${process.env.MONGODB_CLUSTER_URL}games`;
+// URI = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PWD}@${process.env.MONGODB_CLUSTER_URL}games`;
+URI = process.env.MONGO_URI;
 
 mongoose.connect(URI);
 const db = mongoose.connection;
@@ -33,7 +34,8 @@ app.post(
   gamesController.gameFilter,
   (req, res) => {
     // returns array of objects of games
-    res.status(200).json(res.locals.filteredGames);
+    console.log('hi------', res.locals);
+    res.status(200).json(res.locals.games);
   }
 );
 
