@@ -65,8 +65,10 @@ usersController.unlikeGame = async (req, res, next) => {
 
 // get liked games from user likedGames and send to frontend
 usersController.loadLikes = async (req, res, next) => {
+  console.log('We made it')
   try {
-    const username = req.body.username;
+    const username = req.query.username;
+    console.log(username);
     const userData = await Users.findOne({ username: username });
     const likedGamesList = userData.likedGames;
     res.locals.likedGames = likedGamesList;

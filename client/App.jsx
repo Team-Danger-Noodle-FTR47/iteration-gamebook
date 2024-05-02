@@ -7,6 +7,7 @@ import './stylesheets/styles.scss';
 import LoginPage from './pages/Login.jsx';
 import SignupPage from './pages/Signup.jsx';
 import MainPage from './pages/Main.jsx';
+import LikePage from './pages/Like.jsx';
 
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 
@@ -17,6 +18,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+
         <Route
           path='/login'
           element={
@@ -37,7 +39,10 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+
         <Route path='/' element={<Navigate replace to='/login' />} />
+        
+        <Route path='/likegame' element={<LikePage user={user}/>} />
       </Routes>
     </BrowserRouter>
   );

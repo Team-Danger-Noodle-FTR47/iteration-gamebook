@@ -34,7 +34,7 @@ app.post(
   gamesController.gameFilter,
   (req, res) => {
     // returns array of objects of games
-    console.log('hi------', res.locals);
+    // console.log('hi------', res.locals);
     res.status(200).json(res.locals.games);
   }
 );
@@ -46,7 +46,10 @@ app.post('/likegame', usersController.likeGame, (req, res) => {
 
 app.get('/likegame', usersController.loadLikes, (req, res) => {
   // returns object of objects of games
+
   res.status(200).json(res.locals.likedGames);
+  console.log('I am here')
+  console.log(res.locals.likedGames)
 });
 
 app.patch('/likegame', usersController.unlikeGame, (req, res) => {
