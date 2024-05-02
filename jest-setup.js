@@ -1,5 +1,5 @@
-const regeneratorRuntime = require('regenerator-runtime');
+// const regeneratorRuntime = require('regenerator-runtime');
 
-module.exports = async () => {
-  global.testServer = require('./server/server.js');
-};
+// module.exports = async () => {
+//   global.testServer = require('./server/server.js');
+// };

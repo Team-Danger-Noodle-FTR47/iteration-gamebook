@@ -5,11 +5,12 @@ import { render, screen, waitFor } from '@testing-library/react';
 import regeneratorRuntime from 'regenerator-runtime';
 
 import Card from '../client/components/Card';
+import App from '../client/App.jsx'
 
 describe('Empty state before interactions', () => {
     beforeEach(async () => {
       const app = await render(
-          <App />
+          <App/>
       );
     });
 
