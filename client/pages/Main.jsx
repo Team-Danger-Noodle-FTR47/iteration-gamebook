@@ -4,10 +4,13 @@ import Header from '../components/Header.jsx';
 import CardList from '../components/CardList.jsx';
 import PlatformFilter from '../components/PlatformFilter.jsx';
 import GenreFilter from '../components/GenreFilter.jsx';
+import {useNavigate } from 'react-router-dom';
 
 import '../stylesheets/Main.scss';
 
 const Main = ({ initialGames, user }) => {
+  const navigate = useNavigate();
+
   //-----------------------game cards--------------------------------
   const mockGames = [
     {
@@ -61,7 +64,7 @@ const Main = ({ initialGames, user }) => {
     },
   ];
 
-  const itemsPerPage = 4;
+  const itemsPerPage = 3;
   // Game states
   const [games, setGames] = useState(initialGames); // Will be updated with the data from backend
   const [currentGames, setCurrentGames] = useState(
@@ -69,7 +72,7 @@ const Main = ({ initialGames, user }) => {
     // games.slice(0, itemsPerPage) // Start with the first page
     []
   );
-  console.log('games', games);
+  // console.log('games', games);
   // Current page index, items per page, and page count
   //[Remember to replace mockGames to fetched data]
   const [currentPage, setCurrentPage] = useState(0);
@@ -196,8 +199,8 @@ const Main = ({ initialGames, user }) => {
 
         const gamesData = await response.json();
         // Update with the new games data
-        console.log('gamesData', gamesData);
-        console.log(Array.isArray(gamesData));
+        // console.log('gamesData', gamesData);
+        // console.log(Array.isArray(gamesData));
         setGames(gamesData);
         setCurrentPage(0); //Page rest
       } catch (error) {
@@ -238,7 +241,13 @@ const Main = ({ initialGames, user }) => {
   };
   return (
     <div className='main'>
-      <Header />
+      <Header /> 
+      {/* <Link to = "/likegame"> */}
+            <button className='myLikeButton' onClick={() => {
+              navigate('/likegame');  
+            }} >My Likes 🤍</button>
+      {/* </Link> */}
+      
       <CardList
         games={currentGames}
         onLike={handleLikedGames}

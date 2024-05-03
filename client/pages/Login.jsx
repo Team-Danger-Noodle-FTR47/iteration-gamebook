@@ -92,7 +92,7 @@ const LoginPage = ({ setIsAuthenticated, setInitialGames, setUser }) => {
       }
 
       const gamesData = await response.json();
-      console.log(gamesData);
+      // console.log(gamesData);
       // Update with the new games data
       setInitialGames(gamesData);
     } catch (error) {

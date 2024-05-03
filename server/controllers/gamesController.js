@@ -95,7 +95,7 @@ gamesController.getGames = async (req, res, next) => {
       genres: { $in: genres },
     });
 
-    console.log(res.locals.games);
+    // console.log(res.locals.games);
     next();
   } catch (error) {
     console.log(error);
