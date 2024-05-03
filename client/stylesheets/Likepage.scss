@@ -77,3 +77,25 @@
     }
   }
 }
+
+
+.apple{
+    background-color: $purpleblue;
+    text-align: center;
+    height: 100%;
+    // color: rgb(171, 164, 164);
+    // height: 100vh;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    
+    align-items: center;
+    // flex-direction: row;
+
+}
+h1 {
+  color: rgb(34, 33, 33);
+  text-align: center;
+//   display: flex;
+//   justify-content: center;
+}

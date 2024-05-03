@@ -4,10 +4,13 @@ import Header from '../components/Header.jsx';
 import CardList from '../components/CardList.jsx';
 import PlatformFilter from '../components/PlatformFilter.jsx';
 import GenreFilter from '../components/GenreFilter.jsx';
+import {useNavigate } from 'react-router-dom';
 
 import '../stylesheets/Main.scss';
 
 const Main = ({ initialGames, user }) => {
+  const navigate = useNavigate();
+
   //-----------------------game cards--------------------------------
   const mockGames = [
     {
@@ -61,7 +64,7 @@ const Main = ({ initialGames, user }) => {
     },
   ];
 
-  const itemsPerPage = 4;
+  const itemsPerPage = 3;
   // Game states
   const [games, setGames] = useState(initialGames); // Will be updated with the data from backend
   const [currentGames, setCurrentGames] = useState(
@@ -69,7 +72,7 @@ const Main = ({ initialGames, user }) => {
     // games.slice(0, itemsPerPage) // Start with the first page
     []
   );
-  console.log('games', games);
+  // console.log('games', games);
   // Current page index, items per page, and page count
   //[Remember to replace mockGames to fetched data]
   const [currentPage, setCurrentPage] = useState(0);
@@ -84,11 +87,11 @@ const Main = ({ initialGames, user }) => {
 
   // Handlers for next and previous buttons
   const goToNextPage = () => {
-    setCurrentPage(prevPage => Math.min(prevPage + 1, pageCount - 1));
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, pageCount - 1));
   };
 
   const goToPreviousPage = () => {
-    setCurrentPage(prevPage => Math.max(prevPage - 1, 0));
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
   };
 
   //-----------------------filters--------------------------------
@@ -120,8 +123,8 @@ const Main = ({ initialGames, user }) => {
 
   //The filters start with all enabled and switch to a mode where only selected filters are active once a user starts interacting with them
 
-  const handlePFilterSelect = selectedPlatform => {
-    setActivePFilter(prevFilters => {
+  const handlePFilterSelect = (selectedPlatform) => {
+    setActivePFilter((prevFilters) => {
       // Check if we are starting from a state where all filters are active
       const allFiltersActive = prevFilters.length === platforms.length;
 
@@ -133,7 +136,7 @@ const Main = ({ initialGames, user }) => {
         if (prevFilters.includes(selectedPlatform)) {
           // If it is active, remove it
           const filteredFilters = prevFilters.filter(
-            pf => pf !== selectedPlatform
+            (pf) => pf !== selectedPlatform
           );
           // If removing this filter make it an empty list, reactivate all filters
           return filteredFilters.length > 0 ? filteredFilters : platforms;
@@ -150,8 +153,8 @@ const Main = ({ initialGames, user }) => {
   //   console.log(activePFilter);
   // }, [activePFilter]);
 
-  const handleGFilterSelect = selectedGenre => {
-    setActiveGFilter(prevFilters => {
+  const handleGFilterSelect = (selectedGenre) => {
+    setActiveGFilter((prevFilters) => {
       // Check if we are starting from a state where all filters are active
       const allFiltersActive = prevFilters.length === genre.length;
 
@@ -163,7 +166,7 @@ const Main = ({ initialGames, user }) => {
         if (prevFilters.includes(selectedGenre)) {
           // If it is active, remove it
           const filteredFilters = prevFilters.filter(
-            pf => pf !== selectedGenre
+            (pf) => pf !== selectedGenre
           );
           // If removing this filter make it an empty list, reactivate all filters
           return filteredFilters.length > 0 ? filteredFilters : genre;
@@ -196,8 +199,8 @@ const Main = ({ initialGames, user }) => {
 
         const gamesData = await response.json();
         // Update with the new games data
-        console.log('gamesData', gamesData);
-        console.log(Array.isArray(gamesData));
+        // console.log('gamesData', gamesData);
+        // console.log(Array.isArray(gamesData));
         setGames(gamesData);
         setCurrentPage(0); //Page rest
       } catch (error) {
@@ -210,7 +213,7 @@ const Main = ({ initialGames, user }) => {
     }
   }, [activePFilter, activeGFilter]); // Fetch games when filters change
 
-  const handleLikedGames = async likedGame => {
+  const handleLikedGames = async (likedGame) => {
     try {
       const response = await fetch('http://localhost:3000/likegame', {
         method: 'POST',
@@ -223,7 +226,7 @@ const Main = ({ initialGames, user }) => {
       const data = await response.json();
       if (typeof data === 'object') {
         console.log('Unliked', data); //delete after test
-        const updatedGames = games.filter(game => game.name !== data.name); //filter current games to remove liked game
+        const updatedGames = games.filter((game) => game.name !== data.name); //filter current games to remove liked game
         // const newGameResponse = await fetch('/games'); //fetch from game db?
         // const newGame = await newGameResponse.json();
         // updatedGames.push(newGame);
@@ -237,8 +240,14 @@ const Main = ({ initialGames, user }) => {
     }
   };
   return (
-    <div className="main">
-      <Header />
+    <div className='main'>
+      <Header /> 
+      {/* <Link to = "/likegame"> */}
+            <button className='myLikeButton' onClick={() => {
+              navigate('/likegame');  
+            }} >My Likes 🤍</button>
+      {/* </Link> */}
+      
       <CardList
         games={currentGames}
         onLike={handleLikedGames}
@@ -247,15 +256,15 @@ const Main = ({ initialGames, user }) => {
         isPreviousDisabled={currentPage === 0}
         isNextDisabled={currentPage === pageCount - 1}
       />
-      <div className="filters">
-        <div className="platform-filter">
+      <div className='filters'>
+        <div className='platform-filter'>
           <PlatformFilter
             platforms={platforms}
             activePFilter={activePFilter}
             onFilterSelect={handlePFilterSelect}
           />
         </div>
-        <div className="genre-filter">
+        <div className='genre-filter'>
           <GenreFilter
             genre={genre}
             activeGFilter={activeGFilter}

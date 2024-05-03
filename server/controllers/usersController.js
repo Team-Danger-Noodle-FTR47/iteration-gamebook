@@ -20,7 +20,9 @@ usersController.likeGame = async (req, res, next) => {
     // check if game has been already liked by user
     const userData = await Users.findOne({ username: username });
     // if it hasn't been liked add to likedGames under that user
-    if (!userData.likedGames.find(likedGame => likedGame.name === game.name)) {
+    if (
+      !userData.likedGames.find((likedGame) => likedGame.name === game.name)
+    ) {
       await Users.updateOne(
         { username: username },
         { $push: { likedGames: game } }
@@ -63,8 +65,10 @@ usersController.unlikeGame = async (req, res, next) => {
 
 // get liked games from user likedGames and send to frontend
 usersController.loadLikes = async (req, res, next) => {
+  console.log('We made it')
   try {
-    const username = req.body.username;
+    const username = req.query.username;
+    console.log(username);
     const userData = await Users.findOne({ username: username });
     const likedGamesList = userData.likedGames;
     res.locals.likedGames = likedGamesList;
